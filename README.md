@@ -1,196 +1,356 @@
-<h1 align="center">Discover-then-Name: Task-Agnostic Concept Bottlenecks via Automated Concept Discovery</h1>
+# Discover-then-Name: Concept Discovery Pipeline
 
-<div align="center">
-<a href="https://sukrutrao.github.io">Sukrut Rao*</a>,
-<a href="https://swetamahajan.github.io">Sweta Mahajan*</a>,
-<a href="https://moboehle.github.io">Moritz Böhle</a>,
-<a href="https://people.mpi-inf.mpg.de/~schiele">Bernt Schiele</a>
+This document describes how to run the full concept discovery pipeline for the HAM10000 skin lesion dataset using Sparse Autoencoders (SAE) on HPC with SLURM batch jobs.
 
-<h3 align="center">
-European Conference on Computer Vision (ECCV) 2024
-</div>
-</h3>
-  
-<h3 align="center">
-<a href="https://arxiv.org/abs/2407.14499">Paper</a>
-|
-<a href="https://github.com/neuroexplicit-saar/discover-then-name">Code</a>
-|
-<a href="https://sukrutrao.github.io/publication/discover-then-name-task-agnostic-concept-bottlenecks-via-automated-concept-discovery/poster.pdf">Poster</a>
-|
-<a href="https://youtu.be/HEZL3TJCZ44">Video</a>
-|
-<a href="https://sukrutrao.github.io/publication/discover-then-name-task-agnostic-concept-bottlenecks-via-automated-concept-discovery/slides.pdf">Slides</a>
-</h3>
-</p>
+---
 
-## Setup
+## 📋 Pipeline Overview
 
-### Prerequisites
+| Step | Batch Job | Description | Output |
+|------|-----------|-------------|--------|
+| 1 | Local (no GPU needed) | Prepare vocabulary | `master_vocabulary.txt` |
+| 2 | `02_prepare_features_job.sbatch` | Extract image features | `*_patch_features_{train,val}.pt` |
+| 3 | `03_train_sae_job.sbatch` | Train Sparse Autoencoder | `sparse_autoencoder_final.pt` |
+| 4 | `04_find_top_concepts_per_class_job.sbatch` | Analyze top concepts per class | JSON concept rankings |
+| 5 | `05_visualize_ham10000_sae_job.sbatch` | Visualize discovered concepts | PNG heatmaps |
 
-All the dependencies and packages can be installed using pip. The code was tested using Python 3.10.
+---
 
-### Installing the Packages
+## 🔧 Prerequisites
 
-Use:
+### 1. Build the Apptainer Container
 
 ```bash
-pip install -r requirements.txt
-pip install -e sparse_autoencoder/
-pip install -e .
+apptainer build dependencies/dn_cbm_gpu_env.sif dependencies/dn_cbm_gpu_env.def
 ```
 
-### Dataset for training Sparse Autoencoder (CC3M)
+### 2. Prepare Data
 
-#### Download the CC3M tar file to train the SAE
-Note: Number of downloaded paired dataset might be less than we used for our training as we downloaded the dataset in December, 2023. And as of now some more urls might be invalid. 
+Ensure HAM10000 images are accessible on the cluster:
+```
+/scratch/user/$USER/HAM10000/HAM10000_images/
+├── ISIC_0024306.jpg
+├── ISIC_0024307.jpg
+└── ... (all .jpg images)
+```
 
-1) Download the ‘Train_GCC-training.tsv’ and ‘Validation_GCC-1.1.0-Validation.tsv’ from  https://ai.google.com/research/ConceptualCaptions/download by clicking on training split and validation split. 
-
-2) Change their names to cc3m_training.tsv and cc3m_validation.tsv 
-
-3) For training dataset: 
-    ```bash
-    sed -i '1s/^/caption\turl\n/' cc3m_training.tsv 
-    img2dataset --url_list cc3m_training.tsv --input_format "tsv" --url_col "url" --caption_col "caption" --output_format webdataset --output_folder training --processes_count 16 --thread_count 64 --image_size 256 --enable_wandb True
-    ``` 
-
-4) for validation dataset:
-    ```bash
-    sed -i '1s/^/caption\turl\n/' cc3m_validation.tsv 
-    img2dataset --url_list cc3m_validation.tsv --input_format "tsv" --url_col "url" --caption_col "caption" --output_format webdataset --output_folder validation --processes_count 16 --thread_count 64 --image_size 256 --enable_wandb True
-    ```
-
-### Vocabulary for naming concepts
-
-We use the vocabulary of 20k words used by [CLIP-Dissect](https://arxiv.org/abs/2204.10965), from [here](https://github.com/first20hours/google-10000-english/blob/master/20k.txt). Download and place the text file named as `"clipdissect_20k.txt` in `vocab_dir` specified in `config.py`. Then compute normalized CLIP embeddings of each text and save them as `embeddings_<encoder_name>_clipdissect_20k.pth` in `vocab_dir`. For example, for CLIP ResNet-50, the embedding file should be named `embeddings_clip_RN50_clipdissect_20k.pth`.
-
-
-### Datasets for training downstream probes
-
-These are the datasets on which linear probes are trained on the learnt concept bottleneck to form a concept bottleneck model (CBM). In our paper, we use four datasets: Places365, ImageNet, CIFAR10, CIFAR100. Instructions for running experiments on these datasets is provided below, for other datasets you may need to define your own utils.
-
-* Download the respective datasets:
-    * [Places365](https://pytorch.org/vision/main/generated/torchvision.datasets.Places365.html)
-    * [ImageNet](https://www.image-net.org/)
-    * [CIFAR10](https://pytorch.org/vision/main/generated/torchvision.datasets.CIFAR10.html)
-    * [CIFAR100](https://pytorch.org/vision/main/generated/torchvision.datasets.CIFAR100.html)
-* Set the paths to the datasets in `config.py`.
-
-
-
-
-## Usage
-
-The following shows example usage with CLIP ResNet-50 as the model, CC3M as the dataset for training the SAE, and Places365 as the dataset for downstream classification.
-
-### Training a Sparse Autoencoder (SAE)
-
-
-#### Save the CLIP features on CC3M to train the SAE on 
+### 3. Create Required Directories
 
 ```bash
-python scripts/save_cc3m_features.py --img_enc_name clip_RN50 
+mkdir -p logs
+mkdir -p results
 ```
 
-#### Train the SAE
+---
+
+## 🚀 Running the Pipeline (SLURM Batch Jobs)
+
+### Quick Start
 
 ```bash
-python scripts/train_sae_img.py --lr 5e-4 --l1_coeff 3e-5 --expansion_factor 8 --img_enc_name clip_RN50 --num_epochs 200 --resample_freq 10 --ckpt_freq 0 --val_freq 1 --train_sae_bs 4096
+# Step 1: Prepare Vocabulary (run locally, no GPU needed)
+cd new_implementation && python 01_prepare_vocabulary.py && cd ..
+
+# Step 2: Submit feature extraction job
+sbatch sh_scripts/02_prepare_features_job.sbatch
+# Wait for completion...
+
+# Step 3: Submit SAE training job
+sbatch sh_scripts/03_train_sae_job.sbatch
+# Wait for completion...
+
+# Step 4: Submit concept analysis job
+sbatch sh_scripts/04_find_top_concepts_per_class_job.sbatch
+# Wait for completion...
+
+# Step 5: Submit visualization job
+sbatch sh_scripts/05_visualize_ham10000_sae_job.sbatch
 ```
 
-### Assigning Names to Concepts
+### Monitor Jobs
 
 ```bash
-python scripts/assign_names.py --lr 5e-4 --l1_coeff 3e-5 --expansion_factor 8 --img_enc_name clip_RN50 --num_epochs 200 --resample_freq 10 --train_sae_bs 4096
+# Check job queue
+squeue -u $USER
+
+# Watch job status
+watch -n 5 squeue -u $USER
+
+# View real-time logs
+tail -f logs/step3_train_sae*.out
+
+# Check job history
+sacct -j <JOB_ID> --format=JobID,State,ExitCode,Elapsed
 ```
-### Checkpoints and Assigned names can be found at the following link: 
-* [Checkpoints and Assigned Names](https://nextcloud.mpi-klsb.mpg.de/index.php/s/PZYoKSq29XaEgL6)
 
- 
-### Training a Linear Probe for the Concept Bottleneck Model
+---
 
-#### Save the CLIP features of probe dataset
+## 📝 Batch Job Details
+
+### Step 1: Prepare Vocabulary (Local)
+
+No SLURM job needed. Run directly:
 
 ```bash
-python scripts/save_probe_features.py --img_enc_name clip_RN50  --probe_dataset places365
+cd new_implementation
+python 01_prepare_vocabulary.py
+cd ..
 ```
 
-#### Save concept strengths using the trained SAE
+**Output:** `new_implementation/master_vocabulary.txt`
+
+---
+
+### Step 2: Extract Features
+
+**Submit:**
+```bash
+sbatch sh_scripts/02_prepare_features_job.sbatch
+```
+
+**Job Configuration:**
+```bash
+#SBATCH --job-name=step2_features_embedding_dumping
+#SBATCH --account=a_hcc
+#SBATCH --partition=gpu_cuda
+#SBATCH --qos=mig
+#SBATCH --mem=32G
+#SBATCH --gres=gpu:nvidia_a100_80gb_pcie_1g.10gb:1
+#SBATCH --time=12:00:00
+#SBATCH --output=logs/step2_features_embedding_dumping%j.out
+```
+
+**Key Parameters (edit `02_prepare_features.sh`):**
+```bash
+IMAGE_ROOT_DIR="/scratch/user/uqssalem/HAM10000/HAM10000_images"
+MODEL_CHOICE="dermlip"   # or "clip"
+SCRATCH_DIR="/scratch/user/uqssalem/Discover_then_name"
+```
+
+**Output:**
+- `$SCRATCH_DIR/features/dermlip_patch_features_train.pt`
+- `$SCRATCH_DIR/features/dermlip_patch_features_val.pt`
+- `./dermlip_text_embeddings.pt`
+
+**Logs:** `logs/step2_features_embedding_dumping<JOB_ID>.out`
+
+---
+
+### Step 3: Train SAE
+
+**Submit:**
+```bash
+sbatch sh_scripts/03_train_sae_job.sbatch
+```
+
+**Job Configuration:**
+```bash
+#SBATCH --job-name=step3_train_sae
+#SBATCH --account=a_hcc
+#SBATCH --partition=gpu_cuda
+#SBATCH --qos=mig
+#SBATCH --mem=32G
+#SBATCH --gres=gpu:nvidia_a100_80gb_pcie_1g.10gb:1
+#SBATCH --time=12:00:00
+#SBATCH --output=logs/step3_train_sae%j.out
+```
+
+**Key Parameters (edit `03_train_sae.sh`):**
+| Parameter | Value | Description |
+|-----------|-------|-------------|
+| `--input_dim` | 768 | Feature dimension (DermLIP/CLIP) |
+| `--expansion_factor` | 8 | Hidden = 768 × 8 = 6144 neurons |
+| `--num_epochs` | 200 | Training epochs |
+| `--batch_size` | 4096 | Batch size |
+| `--lr` | 3e-4 | Learning rate |
+| `--l1_coeff` | 3e-5 | Sparsity coefficient |
+
+**Output:**
+- `$SCRATCH_DIR/sae_checkpoints/sparse_autoencoder_final.pt`
+- Intermediate checkpoints every 10 epochs
+
+**Logs:** `logs/step3_train_sae<JOB_ID>.out`
+
+---
+
+### Step 4: Find Top Concepts
+
+**Submit:**
+```bash
+sbatch sh_scripts/04_find_top_concepts_per_class_job.sbatch
+```
+
+**Job Configuration:**
+```bash
+#SBATCH --job-name=step4_find_top_concepts
+#SBATCH --account=a_hcc
+#SBATCH --partition=gpu_cuda
+#SBATCH --qos=mig
+#SBATCH --mem=8G
+#SBATCH --gres=gpu:nvidia_a100_80gb_pcie_1g.10gb:1
+#SBATCH --time=12:00:00
+#SBATCH --output=logs/step4_find_top_concepts%j.out
+```
+
+**Key Parameters (edit `04_find_top_concepts_per_class.sh`):**
+```bash
+SAE_CHECKPOINT="$SCRATCH_DIR/sae_checkpoints/sparse_autoencoder_final.pt"
+VAL_FEATURES="$SCRATCH_DIR/features/dermlip_patch_features_val.pt"
+INPUT_DIM=768
+EXPANSION_FACTOR=8
+```
+
+**Output:**
+- `./results/sae_concepts_ham10000_val_global.pth`
+- `./results/class_wise_concepts/val/top_k_concepts_class=0.json`
+- `./results/class_wise_concepts/val/top_k_concepts_class=1.json`
+- ... (one JSON per class)
+
+**Logs:** `logs/step4_find_top_concepts<JOB_ID>.out`
+
+---
+
+### Step 5: Visualize Concepts
+
+**Submit:**
+```bash
+sbatch sh_scripts/05_visualize_ham10000_sae_job.sbatch
+```
+
+**Job Configuration:**
+```bash
+#SBATCH --job-name=step5_visualize_concepts
+#SBATCH --account=a_hcc
+#SBATCH --partition=gpu_cuda
+#SBATCH --qos=mig
+#SBATCH --mem=8G
+#SBATCH --gres=gpu:nvidia_a100_80gb_pcie_1g.10gb:1
+#SBATCH --time=01:00:00
+#SBATCH --output=logs/step5_visualize_concepts%j.out
+```
+
+**Key Parameters (edit `05_visualize_ham10000_sae.sh`):**
+```bash
+VIS_CLASS_ID=4                    # Class to visualize (4 = Melanoma)
+TOP_K=10                          # Number of top concepts
+NUM_IMAGES=20                     # Images per concept
+IMAGE_ROOT_DIR="/scratch/user/uqssalem/HAM10000/HAM10000_images"
+```
+
+**Output:** `./results/visualization_class_4/` (PNG heatmaps)
+
+**Logs:** `logs/step5_visualize_concepts<JOB_ID>.out`
+
+---
+
+## 📊 SLURM Resources Summary
+
+| Job | Memory | GPU | Time | Dependencies |
+|-----|--------|-----|------|--------------|
+| Step 2 | 32G | A100 MIG (10GB) | 12h | None |
+| Step 3 | 32G | A100 MIG (10GB) | 12h | Step 2 |
+| Step 4 | 8G | A100 MIG (10GB) | 12h | Step 2, 3 |
+| Step 5 | 8G | A100 MIG (10GB) | 1h | Step 3, 4 |
+
+---
+
+## 🔗 Job Dependencies (Advanced)
+
+Submit all jobs with dependencies automatically:
 
 ```bash
-python scripts/save_concept_strengths.py --lr 5e-4 --l1_coeff 3e-5 --expansion_factor 8 --img_enc_name clip_RN50 --num_epochs 200  --resample_freq 10  --train_sae_bs 4096  --probe_dataset places365 --probe_split train
+# Step 1: Run locally first
+cd new_implementation && python 01_prepare_vocabulary.py && cd ..
+
+# Step 2: Submit feature extraction
+JOB2=$(sbatch --parsable sh_scripts/02_prepare_features_job.sbatch)
+echo "Submitted Step 2: $JOB2"
+
+# Step 3: Submit SAE training (depends on Step 2)
+JOB3=$(sbatch --parsable --dependency=afterok:$JOB2 sh_scripts/03_train_sae_job.sbatch)
+echo "Submitted Step 3: $JOB3 (after $JOB2)"
+
+# Step 4: Submit concept analysis (depends on Step 3)
+JOB4=$(sbatch --parsable --dependency=afterok:$JOB3 sh_scripts/04_find_top_concepts_per_class_job.sbatch)
+echo "Submitted Step 4: $JOB4 (after $JOB3)"
+
+# Step 5: Submit visualization (depends on Step 4)
+JOB5=$(sbatch --parsable --dependency=afterok:$JOB4 sh_scripts/05_visualize_ham10000_sae_job.sbatch)
+echo "Submitted Step 5: $JOB5 (after $JOB4)"
+
+echo ""
+echo "Pipeline submitted! Monitor with: squeue -u $USER"
 ```
 
-#### Train the probe on the saved concept strengths
+---
+
+## 🏷️ HAM10000 Class Labels
+
+| Class ID | Diagnosis | Full Name |
+|----------|-----------|-----------|
+| 0 | akiec | Actinic Keratoses |
+| 1 | bcc | Basal Cell Carcinoma |
+| 2 | bkl | Benign Keratosis-like Lesions |
+| 3 | df | Dermatofibroma |
+| 4 | mel | Melanoma |
+| 5 | nv | Melanocytic Nevi |
+| 6 | vasc | Vascular Lesions |
+
+---
+
+## ⚙️ Configuration Paths
+
+Edit these paths in the shell scripts before running:
+
+| Variable | Location | Description |
+|----------|----------|-------------|
+| `IMAGE_ROOT_DIR` | `02_prepare_features.sh`, `05_visualize*.sh` | HAM10000 images folder |
+| `SCRATCH_DIR` | All scripts | Directory for large files |
+| `SAE_CHECKPOINT` | `04_*.sh`, `05_*.sh` | Trained SAE model path |
+
+**Default SCRATCH_DIR:**
+```bash
+/scratch/user/uqssalem/Discover_then_name/
+├── features/
+│   ├── dermlip_patch_features_train.pt
+│   └── dermlip_patch_features_val.pt
+└── sae_checkpoints/
+    └── sparse_autoencoder_final.pt
+```
+
+---
+
+## 🐛 Troubleshooting
+
+### Job Failed
 
 ```bash
-python scripts/train_linear_probe.py --lr 5e-4 --l1_coeff 3e-5 --expansion_factor 8 --img_enc_name clip_RN50 --resample_freq 10 --train_sae_bs 4096 --num_epochs 200 --ckpt_freq 0 --val_freq 1 --probe_lr 1e-2  --probe_sparsity_loss_lambda 0.1 --probe_classification_loss 'CE' --probe_epochs 200 --probe_sparsity_loss L1 --probe_eval_coverage_freq 50 --probe_dataset places365
+# Check exit code
+sacct -j <JOB_ID> --format=JobID,State,ExitCode
+
+# View full log
+cat logs/step*<JOB_ID>.out
 ```
 
-### Visualization plots 
-Example on the SAE trained above 
+### Common Issues
 
-#### Task Agnosticity
-First, save the required files for plotting:
+| Error | Solution |
+|-------|----------|
+| `CUDA out of memory` | Reduce `batch_size` in shell script |
+| `File not found` | Check paths in shell scripts; verify previous step completed |
+| `SAE checkpoint not found` | Ensure Step 3 completed; check `$SCRATCH_DIR/sae_checkpoints/` |
+| `Container not found` | Run `apptainer build` first |
+
+### Verify Outputs
+
 ```bash
-python scripts/visualization/vis_task_agnosticity_dump.py --img_enc_name clip_RN50 --probe_split val --method_name ours  --device cuda --sae_dataset cc3m
-```
+# Check Step 2 features
+python -c "import torch; d = torch.load('/scratch/user/$USER/Discover_then_name/features/dermlip_patch_features_val.pt'); print(f'Samples: {len(d)}')"
 
-Then, plot the task agnosticity plots: 
-```bash
-python scripts/visualization/vis_task_agnosticity_plot.py --img_enc_name clip_RN50 --probe_split val --method_name ours --device cpu --sae_dataset cc3m 
-```
+# Check Step 3 checkpoint exists
+ls -la /scratch/user/$USER/Discover_then_name/sae_checkpoints/
 
-#### Meta Clusters
-First, save the required files for plotting:
-```bash 
-python scripts/visualization/vis_meta_clustering_dump.py --img_enc_name clip_RN50 --method_name ours --probe_split val --probe_dataset places365 --sae_dataset cc3m --device cuda
-```
+# View Step 4 top concepts
+cat results/class_wise_concepts/val/top_k_concepts_class=4.json | python -m json.tool | head -30
 
-Then, plot the meta clusters: 
-```bash
-python scripts/visualizations/vis_meta_clustering_plot.py --img_enc_name clip_RN50 --probe_split val --method_name ours  --probe_dataset places365 --sae_dataset cc3m --device cpu
-```
 
-#### Local Explanation
-First, save the required files for plotting:
-```bash
-python scripts/visualization/vis_local_explanations_dump.py --sae_dataset cc3m --img_enc_name clip_RN50 --method_name ours  --probe_split val --probe_dataset places365 --which_ckpt final
-```
-
-Then, plot the local explanations: 
-```bash
-python scripts/visualization/vis_local_explanations_plot.py --sae_dataset cc3m --img_enc_name clip_RN50 --method_name ours --probe_split val --probe_dataset places365  --which_ckpt final --device cpu
-```
-
-#### Global Explanation
-First, save the required files for plotting:
-```bash
-python scripts/visualization/vis_global_explanations_dump.py --sae_dataset cc3m --img_enc_name clip_RN50 --method_name ours --probe_split val   --probe_dataset places365 --which_ckpt final
-```
-
-Then, plot the global explnataions: 
-```bash
-python scripts/visualization/vis_global_explanations_plot.py --img_enc_name clip_RN50 --method_name ours --probe_split val   --probe_dataset places365 --which_ckpt final --device cpu
-```
-
-## Acknowledgements
-
-This repository uses code from the following repositories:
-
-* [openai/CLIP](https://github.com/openai/CLIP)
-* [ai-safety-foundation/sparse_autoencoder](https://github.com/ai-safety-foundation/sparse_autoencoder/)
-
-## Citation
-
-Please cite as follows:
-
-```tex
-@inproceedings{Rao2024Discover,
-    author    = {Rao, Sukrut and Mahajan, Sweta and B\"ohle, Moritz and Schiele, Bernt},
-    title     = {Discover-then-Name: Task-Agnostic Concept Bottlenecks via Automated Concept Discovery},
-    booktitle = {European Conference on Computer Vision},
-    year      = {2024}
-}
-```
