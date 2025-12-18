@@ -1,0 +1,922 @@
+[
+  {
+    "image_id": "ISIC_0033193",
+    "label": 4,
+    "concepts": {
+      "concept_5189": {
+        "mean_activation": 25.831127166748047,
+        "max_activation": 104.17040252685547
+      },
+      "concept_1198": {
+        "mean_activation": 23.84795570373535,
+        "max_activation": 106.36661529541016
+      },
+      "concept_4785": {
+        "mean_activation": 22.91947364807129,
+        "max_activation": 171.87237548828125
+      },
+      "concept_1803": {
+        "mean_activation": 19.823890686035156,
+        "max_activation": 120.22330474853516
+      },
+      "concept_537": {
+        "mean_activation": 19.234376907348633,
+        "max_activation": 84.99021911621094
+      },
+      "concept_1584": {
+        "mean_activation": 18.441164016723633,
+        "max_activation": 151.1644287109375
+      },
+      "concept_5783": {
+        "mean_activation": 18.13776206970215,
+        "max_activation": 67.98815155029297
+      },
+      "concept_4228": {
+        "mean_activation": 18.67327308654785,
+        "max_activation": 53.82790756225586
+      },
+      "concept_5266": {
+        "mean_activation": 18.046281814575195,
+        "max_activation": 257.00079345703125
+      },
+      "concept_3774": {
+        "mean_activation": 19.186227798461914,
+        "max_activation": 88.99651336669922
+      }
+    }
+  },
+  {
+    "image_id": "ISIC_0032192",
+    "label": 4,
+    "concepts": {
+      "concept_5189": {
+        "mean_activation": 25.764205932617188,
+        "max_activation": 107.5795669555664
+      },
+      "concept_1198": {
+        "mean_activation": 22.323610305786133,
+        "max_activation": 108.41336822509766
+      },
+      "concept_4785": {
+        "mean_activation": 21.619403839111328,
+        "max_activation": 170.75059509277344
+      },
+      "concept_1803": {
+        "mean_activation": 20.537487030029297,
+        "max_activation": 123.80705261230469
+      },
+      "concept_537": {
+        "mean_activation": 18.1783390045166,
+        "max_activation": 85.07232666015625
+      },
+      "concept_1584": {
+        "mean_activation": 17.03824806213379,
+        "max_activation": 152.66844177246094
+      },
+      "concept_5783": {
+        "mean_activation": 18.190298080444336,
+        "max_activation": 70.21044921875
+      },
+      "concept_4228": {
+        "mean_activation": 19.221738815307617,
+        "max_activation": 52.89346694946289
+      },
+      "concept_5266": {
+        "mean_activation": 17.279924392700195,
+        "max_activation": 252.46873474121094
+      },
+      "concept_3774": {
+        "mean_activation": 19.124624252319336,
+        "max_activation": 89.96495056152344
+      }
+    }
+  },
+  {
+    "image_id": "ISIC_0032182",
+    "label": 4,
+    "concepts": {
+      "concept_5189": {
+        "mean_activation": 21.597959518432617,
+        "max_activation": 92.958251953125
+      },
+      "concept_1198": {
+        "mean_activation": 19.425437927246094,
+        "max_activation": 93.98128509521484
+      },
+      "concept_4785": {
+        "mean_activation": 19.127241134643555,
+        "max_activation": 147.42764282226562
+      },
+      "concept_1803": {
+        "mean_activation": 16.225486755371094,
+        "max_activation": 98.15076446533203
+      },
+      "concept_537": {
+        "mean_activation": 15.853097915649414,
+        "max_activation": 75.39533996582031
+      },
+      "concept_1584": {
+        "mean_activation": 13.722003936767578,
+        "max_activation": 129.47683715820312
+      },
+      "concept_5783": {
+        "mean_activation": 15.961104393005371,
+        "max_activation": 62.91180419921875
+      },
+      "concept_4228": {
+        "mean_activation": 15.956037521362305,
+        "max_activation": 47.730934143066406
+      },
+      "concept_5266": {
+        "mean_activation": 12.577925682067871,
+        "max_activation": 210.33447265625
+      },
+      "concept_3774": {
+        "mean_activation": 15.311079978942871,
+        "max_activation": 78.07814025878906
+      }
+    }
+  },
+  {
+    "image_id": "ISIC_0028764",
+    "label": 4,
+    "concepts": {
+      "concept_5189": {
+        "mean_activation": 17.555139541625977,
+        "max_activation": 96.31692504882812
+      },
+      "concept_1198": {
+        "mean_activation": 14.918783187866211,
+        "max_activation": 95.21038055419922
+      },
+      "concept_4785": {
+        "mean_activation": 15.84411907196045,
+        "max_activation": 142.60354614257812
+      },
+      "concept_1803": {
+        "mean_activation": 14.491256713867188,
+        "max_activation": 114.32478332519531
+      },
+      "concept_537": {
+        "mean_activation": 11.118782997131348,
+        "max_activation": 75.21601867675781
+      },
+      "concept_1584": {
+        "mean_activation": 12.15382194519043,
+        "max_activation": 127.811279296875
+      },
+      "concept_5783": {
+        "mean_activation": 11.166790008544922,
+        "max_activation": 64.68451690673828
+      },
+      "concept_4228": {
+        "mean_activation": 11.13791561126709,
+        "max_activation": 49.25515365600586
+      },
+      "concept_5266": {
+        "mean_activation": 13.313931465148926,
+        "max_activation": 206.8595733642578
+      },
+      "concept_3774": {
+        "mean_activation": 10.736727714538574,
+        "max_activation": 79.6690444946289
+      }
+    }
+  },
+  {
+    "image_id": "ISIC_0034236",
+    "label": 4,
+    "concepts": {
+      "concept_5189": {
+        "mean_activation": 27.645971298217773,
+        "max_activation": 100.28453063964844
+      },
+      "concept_1198": {
+        "mean_activation": 25.750314712524414,
+        "max_activation": 100.98844909667969
+      },
+      "concept_4785": {
+        "mean_activation": 24.812301635742188,
+        "max_activation": 158.03811645507812
+      },
+      "concept_1803": {
+        "mean_activation": 21.072265625,
+        "max_activation": 113.16614532470703
+      },
+      "concept_537": {
+        "mean_activation": 19.99618911743164,
+        "max_activation": 81.16838836669922
+      },
+      "concept_1584": {
+        "mean_activation": 20.19295883178711,
+        "max_activation": 140.20298767089844
+      },
+      "concept_5783": {
+        "mean_activation": 19.951250076293945,
+        "max_activation": 67.03607177734375
+      },
+      "concept_4228": {
+        "mean_activation": 19.059507369995117,
+        "max_activation": 58.202640533447266
+      },
+      "concept_5266": {
+        "mean_activation": 19.54279136657715,
+        "max_activation": 231.81588745117188
+      },
+      "concept_3774": {
+        "mean_activation": 19.62594985961914,
+        "max_activation": 84.75039672851562
+      }
+    }
+  },
+  {
+    "image_id": "ISIC_0033024",
+    "label": 4,
+    "concepts": {
+      "concept_5189": {
+        "mean_activation": 18.718496322631836,
+        "max_activation": 101.3197250366211
+      },
+      "concept_1198": {
+        "mean_activation": 16.83744239807129,
+        "max_activation": 101.07664489746094
+      },
+      "concept_4785": {
+        "mean_activation": 16.942100524902344,
+        "max_activation": 151.74208068847656
+      },
+      "concept_1803": {
+        "mean_activation": 15.52023983001709,
+        "max_activation": 143.11839294433594
+      },
+      "concept_537": {
+        "mean_activation": 11.71033000946045,
+        "max_activation": 80.3335952758789
+      },
+      "concept_1584": {
+        "mean_activation": 13.483841896057129,
+        "max_activation": 139.19386291503906
+      },
+      "concept_5783": {
+        "mean_activation": 11.952908515930176,
+        "max_activation": 66.96361541748047
+      },
+      "concept_4228": {
+        "mean_activation": 13.092875480651855,
+        "max_activation": 49.511356353759766
+      },
+      "concept_5266": {
+        "mean_activation": 12.85587215423584,
+        "max_activation": 224.69358825683594
+      },
+      "concept_3774": {
+        "mean_activation": 12.328463554382324,
+        "max_activation": 84.3113784790039
+      }
+    }
+  },
+  {
+    "image_id": "ISIC_0025987",
+    "label": 4,
+    "concepts": {
+      "concept_5189": {
+        "mean_activation": 27.358537673950195,
+        "max_activation": 101.05884552001953
+      },
+      "concept_1198": {
+        "mean_activation": 24.486074447631836,
+        "max_activation": 103.48902130126953
+      },
+      "concept_4785": {
+        "mean_activation": 25.25663185119629,
+        "max_activation": 172.73036193847656
+      },
+      "concept_1803": {
+        "mean_activation": 20.430456161499023,
+        "max_activation": 125.90084838867188
+      },
+      "concept_537": {
+        "mean_activation": 19.12205696105957,
+        "max_activation": 82.36701202392578
+      },
+      "concept_1584": {
+        "mean_activation": 21.137083053588867,
+        "max_activation": 154.2010955810547
+      },
+      "concept_5783": {
+        "mean_activation": 19.128591537475586,
+        "max_activation": 64.77996826171875
+      },
+      "concept_4228": {
+        "mean_activation": 17.39014434814453,
+        "max_activation": 48.49156188964844
+      },
+      "concept_5266": {
+        "mean_activation": 19.278427124023438,
+        "max_activation": 263.13494873046875
+      },
+      "concept_3774": {
+        "mean_activation": 17.68709373474121,
+        "max_activation": 86.00165557861328
+      }
+    }
+  },
+  {
+    "image_id": "ISIC_0032152",
+    "label": 4,
+    "concepts": {
+      "concept_5189": {
+        "mean_activation": 24.71733283996582,
+        "max_activation": 98.91944885253906
+      },
+      "concept_1198": {
+        "mean_activation": 21.866050720214844,
+        "max_activation": 98.49356842041016
+      },
+      "concept_4785": {
+        "mean_activation": 21.499000549316406,
+        "max_activation": 152.64971923828125
+      },
+      "concept_1803": {
+        "mean_activation": 18.81185531616211,
+        "max_activation": 125.07080078125
+      },
+      "concept_537": {
+        "mean_activation": 16.698495864868164,
+        "max_activation": 78.62361145019531
+      },
+      "concept_1584": {
+        "mean_activation": 17.98648452758789,
+        "max_activation": 137.7166290283203
+      },
+      "concept_5783": {
+        "mean_activation": 17.594228744506836,
+        "max_activation": 65.83919525146484
+      },
+      "concept_4228": {
+        "mean_activation": 16.449073791503906,
+        "max_activation": 48.72723388671875
+      },
+      "concept_5266": {
+        "mean_activation": 17.57069969177246,
+        "max_activation": 227.14219665527344
+      },
+      "concept_3774": {
+        "mean_activation": 15.578104972839355,
+        "max_activation": 81.27202606201172
+      }
+    }
+  },
+  {
+    "image_id": "ISIC_0027171",
+    "label": 4,
+    "concepts": {
+      "concept_5189": {
+        "mean_activation": 31.051725387573242,
+        "max_activation": 106.30660247802734
+      },
+      "concept_1198": {
+        "mean_activation": 28.9780216217041,
+        "max_activation": 107.46247100830078
+      },
+      "concept_4785": {
+        "mean_activation": 27.284608840942383,
+        "max_activation": 171.517822265625
+      },
+      "concept_1803": {
+        "mean_activation": 24.55502700805664,
+        "max_activation": 135.31024169921875
+      },
+      "concept_537": {
+        "mean_activation": 22.831350326538086,
+        "max_activation": 85.2650375366211
+      },
+      "concept_1584": {
+        "mean_activation": 22.09825897216797,
+        "max_activation": 152.84634399414062
+      },
+      "concept_5783": {
+        "mean_activation": 22.576425552368164,
+        "max_activation": 68.66151428222656
+      },
+      "concept_4228": {
+        "mean_activation": 22.163869857788086,
+        "max_activation": 59.62480163574219
+      },
+      "concept_5266": {
+        "mean_activation": 21.00191307067871,
+        "max_activation": 258.14923095703125
+      },
+      "concept_3774": {
+        "mean_activation": 22.68002700805664,
+        "max_activation": 89.0415267944336
+      }
+    }
+  },
+  {
+    "image_id": "ISIC_0029480",
+    "label": 4,
+    "concepts": {
+      "concept_5189": {
+        "mean_activation": 26.51355743408203,
+        "max_activation": 98.39627838134766
+      },
+      "concept_1198": {
+        "mean_activation": 23.85222053527832,
+        "max_activation": 99.55858612060547
+      },
+      "concept_4785": {
+        "mean_activation": 23.257972717285156,
+        "max_activation": 151.96084594726562
+      },
+      "concept_1803": {
+        "mean_activation": 18.36267852783203,
+        "max_activation": 132.7218017578125
+      },
+      "concept_537": {
+        "mean_activation": 19.125015258789062,
+        "max_activation": 78.9548568725586
+      },
+      "concept_1584": {
+        "mean_activation": 18.96343421936035,
+        "max_activation": 137.17503356933594
+      },
+      "concept_5783": {
+        "mean_activation": 20.38369369506836,
+        "max_activation": 67.12191009521484
+      },
+      "concept_4228": {
+        "mean_activation": 18.43456268310547,
+        "max_activation": 50.24469757080078
+      },
+      "concept_5266": {
+        "mean_activation": 19.102371215820312,
+        "max_activation": 227.51295471191406
+      },
+      "concept_3774": {
+        "mean_activation": 18.040258407592773,
+        "max_activation": 82.85926055908203
+      }
+    }
+  },
+  {
+    "image_id": "ISIC_0024449",
+    "label": 4,
+    "concepts": {
+      "concept_5189": {
+        "mean_activation": 19.618677139282227,
+        "max_activation": 104.85961151123047
+      },
+      "concept_1198": {
+        "mean_activation": 17.72679901123047,
+        "max_activation": 106.65144348144531
+      },
+      "concept_4785": {
+        "mean_activation": 17.89730453491211,
+        "max_activation": 168.9754180908203
+      },
+      "concept_1803": {
+        "mean_activation": 15.746686935424805,
+        "max_activation": 109.68923950195312
+      },
+      "concept_537": {
+        "mean_activation": 14.028459548950195,
+        "max_activation": 83.77593231201172
+      },
+      "concept_1584": {
+        "mean_activation": 13.770408630371094,
+        "max_activation": 149.18731689453125
+      },
+      "concept_5783": {
+        "mean_activation": 14.020575523376465,
+        "max_activation": 68.83333587646484
+      },
+      "concept_4228": {
+        "mean_activation": 14.881681442260742,
+        "max_activation": 50.43798065185547
+      },
+      "concept_5266": {
+        "mean_activation": 15.168317794799805,
+        "max_activation": 251.20013427734375
+      },
+      "concept_3774": {
+        "mean_activation": 14.672245979309082,
+        "max_activation": 89.06731414794922
+      }
+    }
+  },
+  {
+    "image_id": "ISIC_0029652",
+    "label": 4,
+    "concepts": {
+      "concept_5189": {
+        "mean_activation": 29.860654830932617,
+        "max_activation": 103.04061126708984
+      },
+      "concept_1198": {
+        "mean_activation": 25.647903442382812,
+        "max_activation": 100.83114624023438
+      },
+      "concept_4785": {
+        "mean_activation": 25.232107162475586,
+        "max_activation": 153.1133575439453
+      },
+      "concept_1803": {
+        "mean_activation": 23.96293067932129,
+        "max_activation": 122.76072692871094
+      },
+      "concept_537": {
+        "mean_activation": 19.73717498779297,
+        "max_activation": 79.48986053466797
+      },
+      "concept_1584": {
+        "mean_activation": 21.196687698364258,
+        "max_activation": 138.91929626464844
+      },
+      "concept_5783": {
+        "mean_activation": 19.422119140625,
+        "max_activation": 67.30340576171875
+      },
+      "concept_4228": {
+        "mean_activation": 20.05278968811035,
+        "max_activation": 60.15326690673828
+      },
+      "concept_5266": {
+        "mean_activation": 20.79477310180664,
+        "max_activation": 223.8867645263672
+      },
+      "concept_3774": {
+        "mean_activation": 19.71598243713379,
+        "max_activation": 83.24349212646484
+      }
+    }
+  },
+  {
+    "image_id": "ISIC_0030521",
+    "label": 4,
+    "concepts": {
+      "concept_5189": {
+        "mean_activation": 32.29177474975586,
+        "max_activation": 102.5186767578125
+      },
+      "concept_1198": {
+        "mean_activation": 28.67043685913086,
+        "max_activation": 104.93584442138672
+      },
+      "concept_4785": {
+        "mean_activation": 27.079946517944336,
+        "max_activation": 164.0561981201172
+      },
+      "concept_1803": {
+        "mean_activation": 22.671476364135742,
+        "max_activation": 135.89332580566406
+      },
+      "concept_537": {
+        "mean_activation": 22.075693130493164,
+        "max_activation": 82.9136734008789
+      },
+      "concept_1584": {
+        "mean_activation": 23.944040298461914,
+        "max_activation": 147.6041259765625
+      },
+      "concept_5783": {
+        "mean_activation": 22.99995231628418,
+        "max_activation": 68.50251770019531
+      },
+      "concept_4228": {
+        "mean_activation": 22.12052345275879,
+        "max_activation": 55.09637451171875
+      },
+      "concept_5266": {
+        "mean_activation": 22.514341354370117,
+        "max_activation": 249.4497528076172
+      },
+      "concept_3774": {
+        "mean_activation": 20.549367904663086,
+        "max_activation": 87.97220611572266
+      }
+    }
+  },
+  {
+    "image_id": "ISIC_0032970",
+    "label": 4,
+    "concepts": {
+      "concept_5189": {
+        "mean_activation": 25.200489044189453,
+        "max_activation": 102.60841369628906
+      },
+      "concept_1198": {
+        "mean_activation": 22.82221031188965,
+        "max_activation": 104.21475982666016
+      },
+      "concept_4785": {
+        "mean_activation": 22.66930389404297,
+        "max_activation": 162.8629913330078
+      },
+      "concept_1803": {
+        "mean_activation": 21.427650451660156,
+        "max_activation": 122.13336944580078
+      },
+      "concept_537": {
+        "mean_activation": 17.640243530273438,
+        "max_activation": 82.88993835449219
+      },
+      "concept_1584": {
+        "mean_activation": 19.091829299926758,
+        "max_activation": 145.48724365234375
+      },
+      "concept_5783": {
+        "mean_activation": 17.276630401611328,
+        "max_activation": 68.47676086425781
+      },
+      "concept_4228": {
+        "mean_activation": 17.66370964050293,
+        "max_activation": 49.469505310058594
+      },
+      "concept_5266": {
+        "mean_activation": 18.33492660522461,
+        "max_activation": 242.1049041748047
+      },
+      "concept_3774": {
+        "mean_activation": 17.48143196105957,
+        "max_activation": 87.28765869140625
+      }
+    }
+  },
+  {
+    "image_id": "ISIC_0026430",
+    "label": 4,
+    "concepts": {
+      "concept_5189": {
+        "mean_activation": 23.029251098632812,
+        "max_activation": 109.82640075683594
+      },
+      "concept_1198": {
+        "mean_activation": 19.564010620117188,
+        "max_activation": 111.46167755126953
+      },
+      "concept_4785": {
+        "mean_activation": 18.888904571533203,
+        "max_activation": 180.54550170898438
+      },
+      "concept_1803": {
+        "mean_activation": 17.454002380371094,
+        "max_activation": 118.54827117919922
+      },
+      "concept_537": {
+        "mean_activation": 15.906060218811035,
+        "max_activation": 87.4390869140625
+      },
+      "concept_1584": {
+        "mean_activation": 13.344409942626953,
+        "max_activation": 158.93914794921875
+      },
+      "concept_5783": {
+        "mean_activation": 16.063364028930664,
+        "max_activation": 71.19514465332031
+      },
+      "concept_4228": {
+        "mean_activation": 16.986074447631836,
+        "max_activation": 67.76671600341797
+      },
+      "concept_5266": {
+        "mean_activation": 14.820975303649902,
+        "max_activation": 267.6763000488281
+      },
+      "concept_3774": {
+        "mean_activation": 16.636524200439453,
+        "max_activation": 91.96813201904297
+      }
+    }
+  },
+  {
+    "image_id": "ISIC_0033805",
+    "label": 4,
+    "concepts": {
+      "concept_5189": {
+        "mean_activation": 22.556720733642578,
+        "max_activation": 102.46820831298828
+      },
+      "concept_1198": {
+        "mean_activation": 20.60160255432129,
+        "max_activation": 104.38907623291016
+      },
+      "concept_4785": {
+        "mean_activation": 20.501211166381836,
+        "max_activation": 163.20657348632812
+      },
+      "concept_1803": {
+        "mean_activation": 19.00589942932129,
+        "max_activation": 164.133056640625
+      },
+      "concept_537": {
+        "mean_activation": 17.007308959960938,
+        "max_activation": 82.26776123046875
+      },
+      "concept_1584": {
+        "mean_activation": 17.219301223754883,
+        "max_activation": 148.02447509765625
+      },
+      "concept_5783": {
+        "mean_activation": 16.428668975830078,
+        "max_activation": 68.40341186523438
+      },
+      "concept_4228": {
+        "mean_activation": 15.002725601196289,
+        "max_activation": 52.850555419921875
+      },
+      "concept_5266": {
+        "mean_activation": 17.416236877441406,
+        "max_activation": 252.33140563964844
+      },
+      "concept_3774": {
+        "mean_activation": 15.9766845703125,
+        "max_activation": 87.82682800292969
+      }
+    }
+  },
+  {
+    "image_id": "ISIC_0031189",
+    "label": 4,
+    "concepts": {
+      "concept_5189": {
+        "mean_activation": 28.113107681274414,
+        "max_activation": 107.86734008789062
+      },
+      "concept_1198": {
+        "mean_activation": 24.809743881225586,
+        "max_activation": 109.12250518798828
+      },
+      "concept_4785": {
+        "mean_activation": 23.513547897338867,
+        "max_activation": 175.35409545898438
+      },
+      "concept_1803": {
+        "mean_activation": 20.146860122680664,
+        "max_activation": 140.525634765625
+      },
+      "concept_537": {
+        "mean_activation": 19.874679565429688,
+        "max_activation": 86.20661926269531
+      },
+      "concept_1584": {
+        "mean_activation": 19.13672637939453,
+        "max_activation": 154.93252563476562
+      },
+      "concept_5783": {
+        "mean_activation": 19.638608932495117,
+        "max_activation": 70.91505432128906
+      },
+      "concept_4228": {
+        "mean_activation": 20.492027282714844,
+        "max_activation": 57.14653396606445
+      },
+      "concept_5266": {
+        "mean_activation": 17.750293731689453,
+        "max_activation": 264.5126647949219
+      },
+      "concept_3774": {
+        "mean_activation": 19.352813720703125,
+        "max_activation": 91.55621337890625
+      }
+    }
+  },
+  {
+    "image_id": "ISIC_0034211",
+    "label": 4,
+    "concepts": {
+      "concept_5189": {
+        "mean_activation": 25.06263542175293,
+        "max_activation": 107.0986557006836
+      },
+      "concept_1198": {
+        "mean_activation": 21.400320053100586,
+        "max_activation": 108.6008071899414
+      },
+      "concept_4785": {
+        "mean_activation": 21.427595138549805,
+        "max_activation": 172.8433074951172
+      },
+      "concept_1803": {
+        "mean_activation": 21.354093551635742,
+        "max_activation": 161.28286743164062
+      },
+      "concept_537": {
+        "mean_activation": 16.78890037536621,
+        "max_activation": 85.93744659423828
+      },
+      "concept_1584": {
+        "mean_activation": 18.81611442565918,
+        "max_activation": 155.2002410888672
+      },
+      "concept_5783": {
+        "mean_activation": 15.75568962097168,
+        "max_activation": 70.26371002197266
+      },
+      "concept_4228": {
+        "mean_activation": 13.910059928894043,
+        "max_activation": 52.02199935913086
+      },
+      "concept_5266": {
+        "mean_activation": 16.549617767333984,
+        "max_activation": 265.51019287109375
+      },
+      "concept_3774": {
+        "mean_activation": 15.073678016662598,
+        "max_activation": 90.06490325927734
+      }
+    }
+  },
+  {
+    "image_id": "ISIC_0027101",
+    "label": 4,
+    "concepts": {
+      "concept_5189": {
+        "mean_activation": 20.85904884338379,
+        "max_activation": 102.17855834960938
+      },
+      "concept_1198": {
+        "mean_activation": 18.621492385864258,
+        "max_activation": 104.35918426513672
+      },
+      "concept_4785": {
+        "mean_activation": 18.5860595703125,
+        "max_activation": 165.57400512695312
+      },
+      "concept_1803": {
+        "mean_activation": 18.537405014038086,
+        "max_activation": 119.61958312988281
+      },
+      "concept_537": {
+        "mean_activation": 14.399866104125977,
+        "max_activation": 82.88339233398438
+      },
+      "concept_1584": {
+        "mean_activation": 14.669707298278809,
+        "max_activation": 148.99789428710938
+      },
+      "concept_5783": {
+        "mean_activation": 14.421638488769531,
+        "max_activation": 67.75000762939453
+      },
+      "concept_4228": {
+        "mean_activation": 14.367155075073242,
+        "max_activation": 48.58736038208008
+      },
+      "concept_5266": {
+        "mean_activation": 16.291519165039062,
+        "max_activation": 252.64024353027344
+      },
+      "concept_3774": {
+        "mean_activation": 15.196259498596191,
+        "max_activation": 88.36030578613281
+      }
+    }
+  },
+  {
+    "image_id": "ISIC_0032547",
+    "label": 4,
+    "concepts": {
+      "concept_5189": {
+        "mean_activation": 23.29163932800293,
+        "max_activation": 106.5464859008789
+      },
+      "concept_1198": {
+        "mean_activation": 22.070627212524414,
+        "max_activation": 107.30130767822266
+      },
+      "concept_4785": {
+        "mean_activation": 21.376163482666016,
+        "max_activation": 163.3651885986328
+      },
+      "concept_1803": {
+        "mean_activation": 17.641725540161133,
+        "max_activation": 134.43955993652344
+      },
+      "concept_537": {
+        "mean_activation": 17.71491813659668,
+        "max_activation": 85.48441314697266
+      },
+      "concept_1584": {
+        "mean_activation": 16.92634391784668,
+        "max_activation": 145.425537109375
+      },
+      "concept_5783": {
+        "mean_activation": 17.76402473449707,
+        "max_activation": 71.85520935058594
+      },
+      "concept_4228": {
+        "mean_activation": 18.0328311920166,
+        "max_activation": 55.6962890625
+      },
+      "concept_5266": {
+        "mean_activation": 16.3006591796875,
+        "max_activation": 239.50808715820312
+      },
+      "concept_3774": {
+        "mean_activation": 18.415786743164062,
+        "max_activation": 89.29405975341797
+      }
+    }
+  }
+]

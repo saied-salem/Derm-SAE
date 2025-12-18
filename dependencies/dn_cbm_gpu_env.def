@@ -1,0 +1,66 @@
+Bootstrap: docker
+# For GPU support on HPC, use CUDA base image
+#From: nvidia/cuda:11.8.0-cudnn8-runtime-ubuntu22.04
+From: pytorch/pytorch:2.7.1-cuda11.8-cudnn9-runtime
+# For local Mac testing (CPU only), use: python:3.9-slim
+#From: python:3.9-slim
+
+
+%files
+    # Only copy entry point script to a safe location
+    dependencies/requirements.txt /opt/requirements.txt 
+
+%post
+    export DEBIAN_FRONTEND=noninteractive
+    # 1. Install System Dependencies & Python 3.11
+    apt-get update
+    # Install software-properties-common to add PPAs
+    apt-get install -y software-properties-common
+    # Add the "deadsnakes" PPA to get newer Python versions
+    add-apt-repository ppa:deadsnakes/ppa
+
+    
+    # Install Python 3.11, the venv module, and other system libs
+    apt-get install -y \
+        build-essential \
+        python3.11 \
+        python3.11-venv \
+        curl \
+        ca-certificates \
+        git \
+        pciutils \
+        libglib2.0-0 \
+        libgl1 \
+        pkg-config \
+        libdbus-1-dev \
+        libdbus-glib-1-dev \
+        libcairo2-dev \
+        libnetfilter-queue-dev \
+        libpcap-dev
+    
+    # Clean up apt lists
+    rm -rf /var/lib/apt/lists/*
+
+    # 2. Create a Python Virtual Environment
+    # We create it in /opt/venv
+    python3.11 -m venv /opt/venv
+
+        
+    # Install PyTorch with CUDA support (for GPU)
+    pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+    # For Mac testing (CPU only), use: --index-url https://download.pytorch.org/whl/cpu
+
+    # Install Python dependencies from /opt (where we copied requirements.txt)
+    pip install --no-cache-dir -r /opt/requirements.txt
+
+%environment
+    export PATH=/usr/local/bin:$PATH
+    export PYTHONPATH=/workspace:$PYTHONPATH
+    # Enable GPU visibility
+    export CUDA_VISIBLE_DEVICES=0
+
+
+%labels
+    Author uqssalem@uq.edu.au
+    Version v2.0
+    Description training Dot-CBMs
